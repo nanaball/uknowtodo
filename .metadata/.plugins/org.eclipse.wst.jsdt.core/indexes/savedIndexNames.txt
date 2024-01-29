@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\admin\Desktop\todolist\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2375841002.index
+3389034366.index
+3041941539.index
+475628055.index
+4208813612.index
+3007207367.index
