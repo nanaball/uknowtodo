@@ -17,7 +17,8 @@
 9. `Configure > Add Gradle Nature` 선택
 10. 뭔가 다운받아지면서 위잉 하고 오류 없어짐
 11. 잘 모르겠으면 [링크](https://powernote.tistory.com/40) 참조
-12. [참고1](https://limdevbasic.tistory.com/12) [참고2]([https://limdevbasic.tistory.com/12](https://shoney.tistory.com/entry/Spring-gradle-%EB%B9%8C%EB%93%9C-jar-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95) 
+12. [참고1](https://limdevbasic.tistory.com/12)
+13. [참고2](https://shoney.tistory.com/entry/Spring-gradle-%EB%B9%8C%EB%93%9C-jar-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
 
 ### 프로젝트 실행법
 - 그냥 실행하면 다른 세팅없이 실행됨
