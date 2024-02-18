@@ -11,8 +11,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://localhost:3306/uknowtodo?characterEncoding=UTF-8&serverTimezone=UTC
-    username:
-    password:
+    username: todo
+    password: todo123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
