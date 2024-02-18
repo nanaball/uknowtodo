@@ -1,6 +1,7 @@
 
 create database uknowtodo
 
+
 -- 회원 정보
 CREATE TABLE members(
 	memberNo int PRIMARY KEY auto_increment,	-- 회원번호 번호
