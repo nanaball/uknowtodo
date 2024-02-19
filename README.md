@@ -20,13 +20,14 @@
 11-1). [참고1](https://limdevbasic.tistory.com/12) / [참고2](https://shoney.tistory.com/entry/Spring-gradle-%EB%B9%8C%EB%93%9C-jar-%EC%8B%A4%ED%96%89%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95)
 
 
+ ### pull 이후 메소드들 오류 사항
+- `gradel > refresh gradle projct` 선택해서 다운 받으면 오류 삭제
+
 ### 프로젝트 실행법
 - 그냥 실행하면 다른 세팅없이 실행됨
 - 서버 켜짐 성공후 http://localhost:8080/ 접속하여 메인페이지 제대로 뜨는지 확인
 - `src/main/resources/templates` 폴더에 html 파일 수정하면 적용됨
 
- ### pull 이후 메소드들 오류 사항
-- `gradel > refresh gradle projct` 선택해서 다운 받으면 오류 삭제
 
 ### 데이터베이스 세팅
 - mysql에 `create database uknowtodo` 입력
