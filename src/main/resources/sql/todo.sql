@@ -1,14 +1,14 @@
 
-create database uknowtodo
+create database uknowtodo;
 
 
 -- 회원 정보
 CREATE TABLE members(
-	memberNo int PRIMARY KEY auto_increment,	-- 회원번호 번호
-    id VARCHAR(20) NOT NULL,					-- 회원아이디
-    password VARCHAR(200) NOT NULL				-- 회원 비밀번호
-    writer VARCHAR(20) NOT NULL,				-- 회원 이름
-    regdate DATETIME NOT NULL default now(),	-- 가입 시간
+	memberNo int PRIMARY KEY auto_increment,	-- 회원번호
+    id VARCHAR(50) NOT NULL,					-- 회원아이디
+    password VARCHAR(200) NOT NULL,				-- 회원 비밀번호
+    writer VARCHAR(50) NOT NULL,				-- 회원 이름
+    regdate DATETIME NOT NULL default now()	-- 가입 시간
 );
 
 SELECT * FROM members;
@@ -30,3 +30,7 @@ CREATE TABLE todo(
     updateDate DATETIME NOT NULL,				-- 수정시간
     FOREIGN KEY (memberNo) REFERENCES members(memberNo)
   );
+  
+SELECT * FROM todo;
+
+DESC todo;
