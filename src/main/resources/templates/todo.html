@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/lib/material/material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <title>U Know To do</title>
+</head>
+<body>
+<div class="mdl-layout">
+  <header th:replace="~{/layout/header :: header}"></header>
+  <main class="mdl-layout__content">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--1-col"></div>
+      <div class="mdl-cell mdl-cell--10-col">
+        <h1>안녕하세요, ㅇㅇㅇ 님!</h1>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+          <div class="mdl-textfield__expandable-holder">
+            <textarea class="mdl-textfield__input" type="text" id="sample6"></textarea>
+            <label class="mdl-textfield__label" for="sample6">Expandable Input</label>
+          </div>
+          <label class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-button--colored" for="sample6">
+            <i class="material-icons">add</i>
+          </label>
+        </div>
+        <table
+            style="width: 100%"
+            class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+          <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">할일</th>
+            <th class="mdl-data-table__cell--non-numeric">마감일자</th>
+            <th class="mdl-data-table__cell--non-numeric">완료</th>
+            <th class="mdl-data-table__cell--non-numeric">생성일자</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">스프링 공부 열심히 하기</td>
+            <td class="mdl-data-table__cell--non-numeric">2024-03-10</td>
+            <td class="mdl-data-table__cell--non-numeric">
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                <input type="checkbox" id="switch-1" class="mdl-switch__input">
+                <span class="mdl-switch__label"></span>
+              </label>
+            </td>
+            <td class="mdl-data-table__cell--non-numeric">2024-02-23</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mdl-cell mdl-cell--1-col"></div>
+    </div>
+  </main>
+</div>
+<script src="/lib/material/material.min.js"></script>
+</body>

@@ -10,4 +10,9 @@ public class SignInController {
     public String signInPage() {
         return "sign-in";
     }
+
+    @GetMapping("/sign-up")
+    public String signUpPage() {
+        return "sign-up";
+    }
 }
