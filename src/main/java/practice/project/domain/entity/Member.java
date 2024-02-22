@@ -1,17 +1,18 @@
 package practice.project.domain.entity;
 
-import org.springframework.data.annotation.CreatedDate;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Getter
+@Setter
 @Table(name = "members")
 @Entity
-public class Member extends DateTime{
+public class Member {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)		// 자동증가
@@ -25,7 +26,13 @@ public class Member extends DateTime{
 	
 	@Column
 	private String writer;	// 회원이름 
-	
-	
 
+	@Column
+	private LocalDateTime regdate;
+
+	@PrePersist
+	public void prePersist() {
+		LocalDateTime now = LocalDateTime.now();
+		this.regdate = Optional.ofNullable(this.regdate).orElse(now);
+	}
 }

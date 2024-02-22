@@ -1,15 +1,18 @@
 package practice.project.domain.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+@Getter
+@Setter
 @Table(name = "todo")
 @Entity
-public class Todo extends DateTime {
+public class Todo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)		// 자동증가
@@ -26,4 +29,20 @@ public class Todo extends DateTime {
 	
 	@Column
 	private boolean completed; 		// 완료여부
+
+	@Column
+	private LocalDateTime todoDate; //  마감시간
+
+	@Column
+	private LocalDateTime createdDate;
+
+	@Column
+	private LocalDateTime updatedDate;
+
+	@PrePersist
+	public void prePersist() {
+		LocalDateTime now = LocalDateTime.now();
+		this.createdDate = Optional.ofNullable(this.createdDate).orElse(now);
+		this.updatedDate = now;
+	}
 }
