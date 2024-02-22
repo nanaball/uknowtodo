@@ -28,7 +28,6 @@
 - 서버 켜짐 성공후 http://localhost:8080/ 접속하여 메인페이지 제대로 뜨는지 확인
 - `src/main/resources/templates` 폴더에 html 파일 수정하면 적용됨
 
-
 ### 데이터베이스 세팅
 - mysql에 `create database uknowtodo` 입력
 - `src/main/resources/application.yml` 파일에 `username`, `password` 를 입력

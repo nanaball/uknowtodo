@@ -12,6 +12,7 @@ public class DefaultController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("Hello");
         mav.addObject("name", "수연");
+        mav.addObject("name1", "가연");
         return mav;
     }
 }
