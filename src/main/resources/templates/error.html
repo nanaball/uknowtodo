@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/lib/material/material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <title>U Know To do - Unexpected Error</title>
+</head>
+<body>
+<header th:replace="~{/layout/header :: header}"></header>
+<main>
+  <div class="mdl-grid">
+    <div class="mdl-cell--1-col"></div>
+    <h1 class="mdl-cell--11-col mdl-color-text--indigo">예상하지 못한 에러</h1>
+  </div>
+  <div th:if="${e != null}" class="mdl-color-text--black" style="margin-left: 100px">
+    <h5 th:text="${e.toString}"></h5>
+    <th:block th:each="item : ${list}">
+      <p th:text="${item}" style="margin-bottom: 5px"></p>
+    </th:block>
+  </div>
+</main>
+</body>
+</html>
