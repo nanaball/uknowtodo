@@ -33,3 +33,6 @@
 - `src/main/resources/application.yml` 파일에 `username`, `password` 를 입력
 - `src/main/java/practice/project/domain/entity` 안에 있는 `User` 클래스 참조하여 sql 파일에 맞게 변수들 넣기 (`@Column` 필드 추가하기)
 - 다른 테이블용 클래스도 비슷하게 생성
+
+### 로그인
+- 일단 로그인페이지에서 아이디 아무거나 넣고 비번 `1111`넣으면 로그인되게 해둠

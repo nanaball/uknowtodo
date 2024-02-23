@@ -8,8 +8,12 @@
         </a>
         <div class="mdl-layout-spacer"></div>
         <div class="mdl-navigation">
-          <a class="mdl-navigation__link" href="/sign-in">로그인</a>
-          <a class="mdl-navigation__link" href="/sign-out">로그아웃</a>
+          <span sec:authorize="isAnonymous()">
+            <a class="mdl-navigation__link" href="/sign-in">로그인</a>
+          </span>
+          <span sec:authorize="isAuthenticated()">
+            <a class="mdl-navigation__link" href="/sign-out">로그아웃</a>
+          </span>
         </div>
       </div>
     </header>
