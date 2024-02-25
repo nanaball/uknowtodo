@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/lib/material/material.min.css">
+  <link rel="stylesheet" href="/css/material.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <title>U Know To do - 로그인</title>
 </head>
@@ -26,6 +26,9 @@
             <input class="mdl-textfield__input" type="password" id="password" name="password">
             <label class="mdl-textfield__label" for="password">비밀번호</label>
           </div>
+          <div class="mdl-textfield mdl-js-textfield sign-in-error-div" style="margin: 5px 0; padding: 0; width: 100%">
+            <span class="mdl-textfield__error" style="top: -20px"></span>
+          </div>
           <div>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
                     type="submit"
@@ -46,6 +49,21 @@
     </div>
   </main>
 </div>
-<script src="/lib/material/material.min.js"></script>
+<div th:replace="~{/layout/common-script :: common-script}"></div>
+<script>
+  $('button[type="submit"]').click(function (e) {
+    e.preventDefault();
+    const $signInError = $('.sign-in-error-div');
+    $signInError.removeClass('is-invalid');
+    const $errorSpan = $('.mdl-textfield__error');
+    $.post('/sign-in', $('form').serialize(), function (data) {
+      location.replace(data.content);
+    })
+    .fail(function (data) {
+      $signInError.addClass('is-invalid');
+      $errorSpan.text(data.responseJSON.content);
+    });
+  });
+</script>
 </body>
 </html>
