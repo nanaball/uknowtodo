@@ -1,4 +1,4 @@
-package practice.project.controller;
+package practice.project.controller.pages;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Arrays;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "practice.project.controller.pages")
 public class ErrorControllerAdvice {
 
     @ExceptionHandler(Throwable.class)

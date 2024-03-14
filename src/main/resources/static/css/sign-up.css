@@ -1,0 +1,16 @@
+.mdl-textfield.is-valid .mdl-textfield__input {
+  border-color: rgb(76,175,80);
+  border-width: 2px;
+}
+
+.mdl-textfield .material-icons.valid-check-circle {
+  visibility: hidden;
+  color: rgb(76,175,80);
+  position: absolute;
+  top: 20px;
+  right: 10px;
+}
+
+.mdl-textfield.is-valid .material-icons.valid-check-circle {
+  visibility: visible;
+}

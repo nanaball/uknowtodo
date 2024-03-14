@@ -1,4 +1,4 @@
-package practice.project.controller.dto;
+package practice.project.controller.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 

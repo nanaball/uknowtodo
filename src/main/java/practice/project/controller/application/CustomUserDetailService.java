@@ -17,7 +17,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return User.builder()
                 .username(username)
-                .password(encoder.encode("1111"))
+                .password(encoder.encode("qwer1234!"))
                 .authorities(new SimpleGrantedAuthority("user"))
                 .build();
     }

@@ -21,7 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import practice.project.controller.application.CustomUserDetailService;
-import practice.project.controller.dto.ResponseDto;
+import practice.project.controller.api.dto.ResponseDto;
 import practice.project.util.ObjectMapperUtil;
 
 import java.io.IOException;
@@ -78,8 +78,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/", "/sign-in", "/sign-up").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(req -> req.requestMatchers("/", "/sign-in", "/sign-up", "/api/find-id", "/api/sign-up")
+                        .permitAll().anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/sign-in")
+                        .loginProcessingUrl("/api/sign-in")
                         .successHandler(simpleUrlAuthenticationSuccessHandler())
                         .failureHandler(simpleUrlAuthenticationFailureHandler())
                         .permitAll())

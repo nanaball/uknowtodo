@@ -17,16 +17,19 @@
         <h2 class="mdl-card__title-text">로그인</h2>
       </div>
       <div class="mdl-card__supporting-text" style="padding: 0 24px 16px;">
-        <form method="post" action="/sign-in">
-          <div class="mdl-textfield mdl-js-textfield" style="width: 470px">
-            <input class="mdl-textfield__input" type="text" id="user" name="username">
-            <label class="mdl-textfield__label" for="user">아이디</label>
+        <form method="post" action="/api/sign-in">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+            <input class="mdl-textfield__input" type="text" id="username" name="username">
+            <label class="mdl-textfield__label" for="username">아이디</label>
+            <span class="mdl-textfield__error"></span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield" style="width: 470px">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
             <input class="mdl-textfield__input" type="password" id="password" name="password">
             <label class="mdl-textfield__label" for="password">비밀번호</label>
+            <span class="mdl-textfield__error"></span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield sign-in-error-div" style="margin: 5px 0; padding: 0; width: 100%">
+          <div class="mdl-textfield mdl-js-textfield" style="margin: 5px 0; padding: 0; width: 100%">
+            <input class="mdl-textfield__input" type="hidden" id="form-validation">
             <span class="mdl-textfield__error" style="top: -20px"></span>
           </div>
           <div>
@@ -38,6 +41,7 @@
           </div>
         </form>
       </div>
+      <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate hidden"></div>
     </div>
     <div style="margin: 0 auto; width: 500px;">
       <div class="mdl-grid mdl-typography--text-center">
@@ -50,19 +54,47 @@
   </main>
 </div>
 <div th:replace="~{/layout/common-script :: common-script}"></div>
+<script src="/js/MaterialCustomizer.js"></script>
 <script>
-  $('button[type="submit"]').click(function (e) {
+  const formElem = document.querySelector('form');
+  const progressBar = document.querySelector('.mdl-progress');
+
+  formElem.onsubmit = async (e) => {
     e.preventDefault();
-    const $signInError = $('.sign-in-error-div');
-    $signInError.removeClass('is-invalid');
-    const $errorSpan = $('.mdl-textfield__error');
-    $.post('/sign-in', $('form').serialize(), function (data) {
-      location.replace(data.content);
-    })
-    .fail(function (data) {
-      $signInError.addClass('is-invalid');
-      $errorSpan.text(data.responseJSON.content);
+
+    if(textField['username'].blankValidation('아이디를 입력하세요')) {
+      return;
+    }
+
+    if(textField['password'].blankValidation('비밀번호를 입력하세요')) {
+      return;
+    }
+
+    progressBar.classList.remove('hidden');
+
+    const response = await fetch('/api/sign-in', {
+      method: 'POST',
+      body: new FormData(formElem)
     });
+
+    const result = await response.json();
+
+    progressBar.classList.add('hidden');
+
+    if (result.success) {
+      location.replace(result.content);
+    } else {
+      textField['form-validation'].customValidation(true, result.content || '로그인에 실패하였습니다.');
+    }
+  };
+
+  document.querySelectorAll('.mdl-js-textfield > input').forEach(input => {
+    input.onkeydown = () => {
+      const object = textField[input.id];
+      if (!object.isBlank()) {
+        object.resetValidation();
+      }
+    };
   });
 </script>
 </body>

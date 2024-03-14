@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/material.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="/css/sign-up.css">
   <title>U Know To do - 회원가입</title>
 </head>
 <body>
@@ -18,25 +19,32 @@
       </div>
       <div class="mdl-card__supporting-text" style="padding: 0 24px 16px;">
         <form method="post" action="/sign-up">
-          <div class="mdl-textfield mdl-js-textfield" style="width: 470px">
-            <input class="mdl-textfield__input" name="username" type="text" id="user" pattern="[a-z0-9_\-]{5,20}">
-            <label class="mdl-textfield__label" for="user">아이디</label>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+            <input class="mdl-textfield__input" name="username" type="text" id="username" pattern="[a-z0-9_\-]{5,20}">
+            <label class="mdl-textfield__label" for="username">아이디</label>
+            <span class="material-icons valid-check-circle">check_circle</span>
             <span class="mdl-textfield__error">아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield" style="width: 470px">
-            <input class="mdl-textfield__input" name="password" type="password" id="password" pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+            <input class="mdl-textfield__input" name="password" type="password" id="password"
+                   pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}">
             <label class="mdl-textfield__label" for="password">비밀번호</label>
             <span class="mdl-textfield__error">비밀번호는 8자~20자의 영문, 숫자, 특수문자를 사용해주세요.</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield" style="width: 470px">
-            <input class="mdl-textfield__input" name="password-check" type="password" id="password-check">
-            <label class="mdl-textfield__label" for="password-check">비밀번호 확인</label>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
+            <input class="mdl-textfield__input" type="password" id="passwordCheck"
+                   pattern="(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,20}">
+            <label class="mdl-textfield__label" for="passwordCheck">비밀번호 확인</label>
             <span class="mdl-textfield__error">비밀번호와 동일한 값을 입력해주세요.</span>
           </div>
-          <div class="mdl-textfield mdl-js-textfield" style="width: 470px">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--full-width">
             <input class="mdl-textfield__input" name="name" type="text" id="name" pattern="[가-힣]{2,20}">
             <label class="mdl-textfield__label" for="name">이름</label>
-            <span class="mdl-textfield__error">이름은 한글만 사용가능합니다.</span>
+            <span class="mdl-textfield__error">이름은 2글자 이상의 한글만 사용가능합니다.</span>
+          </div>
+          <div class="mdl-textfield mdl-js-textfield" style="margin: 5px 0; padding: 0; width: 100%">
+            <input class="mdl-textfield__input" type="hidden" id="form-validation">
+            <span class="mdl-textfield__error" style="top: -20px"></span>
           </div>
           <div style="margin-top: 20px">
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
@@ -46,9 +54,116 @@
           </div>
         </form>
       </div>
+      <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate hidden"></div>
     </div>
   </main>
 </div>
 <div th:replace="~{/layout/common-script :: common-script}"></div>
+<script src="/js/MaterialCustomizer.js"></script>
+<script>
+  const formElem = document.querySelector('form');
+  const progressBar = document.querySelector('.mdl-progress');
+  const messages = {
+    username: {
+      blank: '아이디를 입력하세요',
+      pattern: '아이디는 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.'
+    },
+    password: {
+      blank: '비밀번호를 입력하세요',
+      pattern: '비밀번호는 8자~20자의 영문, 숫자, 특수문자를 사용해주세요.'
+    },
+    passwordCheck: {
+      blank: '비밀번호 확인을 입력하세요',
+      value: '비밀번호와 동일한 값을 입력해주세요.'
+    },
+    name: {
+      blank: '이름을 입력하세요',
+      pattern: '이름은 2글자 이상의 한글만 사용가능합니다.'
+    }
+  };
+
+  document.querySelector('#username').onkeyup = async (e) => {
+    e.preventDefault();
+    const object = textField['username'];
+    object.DOM.classList.remove('is-valid');
+    if (object.isBlank()) {
+      return;
+    }
+    if (object.patternValidation(messages.username.pattern)) {
+      return;
+    }
+
+    object.resetValidation();
+    const idCheck = await fetch('/api/find-id', {
+      method: 'POST',
+      body: e.target.value.trim()
+    });
+
+    const result = await idCheck.json();
+
+    if (result.success) {
+      object.DOM.classList.add('is-valid');
+    } else {
+      object.customValidation(true, result.content);
+    }
+  };
+
+  document.querySelector('#passwordCheck').onkeyup = (e) => {
+    const object = textField['passwordCheck'];
+    if (object.isBlank()) {
+      return;
+    }
+    const isDifferent = textField.password.input.value !== object.input.value;
+    if (object.customValidation(isDifferent, messages.passwordCheck.value)) {
+      return;
+    }
+    object.resetValidation();
+  };
+
+  document.querySelectorAll('#password, #name').forEach(input => {
+    input.onkeyup = (e) => {
+      const object = textField[input.id];
+      if (object.isBlank()) {
+        return;
+      }
+      if (object.patternValidation(messages[input.id].pattern)) {
+        return;
+      }
+      object.resetValidation();
+    };
+  });
+
+  formElem.onsubmit = async (e) => {
+    e.preventDefault();
+    let isBlankInvalid = Object.keys(messages).some(key => {
+      return textField[key].blankValidation(messages[key].blank);
+    });
+
+    if (isBlankInvalid) {
+      return;
+    }
+
+    if (!formElem.checkValidity()) {
+      return;
+    }
+
+    progressBar.classList.remove('hidden');
+
+    const response = await fetch('/api/sign-up', {
+      method: 'POST',
+      body: new FormData(formElem)
+    });
+
+    const result = await response.json();
+    progressBar.classList.add('hidden');
+
+    if (result.success) {
+      location.replace(result.content);
+    } else {
+      textField['form-validation'].customValidation(true, result.content || '회원가입에 실패하였습니다.');
+    }
+  };
+
+</script>
 </body>
 </html>
