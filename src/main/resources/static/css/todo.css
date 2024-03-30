@@ -1,0 +1,25 @@
+.todo-content-input .mdl-textfield.is-focused:first-child {
+  width: calc(100% - 70px);
+}
+
+.todo-content-input .mdl-button {
+  right: -70px;
+}
+
+.todo-pagination {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-pagination > a.todo-pagination-page {
+  font-size: 16px;
+  line-height: 32px;
+  color: unset;
+  text-decoration: unset;
+}
+.todo-pagination > a.todo-pagination-page.active {
+  background: rgb(63,81,181);
+  color: rgb(255,255,255);
+}

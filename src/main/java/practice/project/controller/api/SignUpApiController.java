@@ -17,7 +17,7 @@ public class SignUpApiController {
     @PostMapping("/api/sign-up")
     public ResponseDto<String> signUp(SignUpRequestDto data, HttpServletRequest request) {
         try {
-            request.login(data.getUsername(), data.getPassword());
+            request.login(data.getId(), data.getPassword());
         } catch (ServletException e) {
             return ResponseDto.ofFailure("로그인에 오류가 발생했습니다.");
         }

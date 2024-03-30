@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/material.min.css">
+  <link rel="stylesheet" href="/css/todo.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <title>U Know To do</title>
 </head>
 <body>
-<div class="mdl-layout">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header th:replace="~{/layout/header :: header}"></header>
   <main class="mdl-layout__content">
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--1-col"></div>
-      <div class="mdl-cell mdl-cell--10-col">
-        <h1>안녕하세요, <span sec:authentication="name"></span> 님!</h1>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-          <div class="mdl-textfield__expandable-holder">
-            <textarea class="mdl-textfield__input" type="text" id="sample6"></textarea>
-            <label class="mdl-textfield__label" for="sample6">Expandable Input</label>
+      <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+        <h1 class="mdl-typography--display-1">안녕하세요, <span sec:authentication="principal.name"></span> 님!</h1>
+        <div class="todo-content-input">
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="sample6">
+            <label class="mdl-textfield__label" for="sample6"></label>
           </div>
-          <label class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-button--colored" for="sample6">
-            <i class="material-icons">add</i>
-          </label>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="date">
+            <label class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-button--colored"
+                   for="sample6">
+              <i class="material-icons">add</i>
+            </label>
+          </div>
         </div>
         <table
             style="width: 100%"
@@ -51,7 +56,28 @@
           </tbody>
         </table>
       </div>
-      <div class="mdl-cell mdl-cell--1-col"></div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-offset-desktop
+                  mdl-cell--6-col mdl-cell--1-offset
+                  todo-pagination">
+        <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
+           th:href="${content.hasBefore} ? '?page=' + ${content.startPage - 1} : 'javascript:;'"
+           th:disabled="${!content.hasBefore}">
+          <span class="material-icons">navigate_before</span>
+        </a>
+        <a th:each="current: ${#numbers.sequence(content.startPage, content.endPage)}"
+           th:classappend="${current == content.page} ? 'active'"
+           th:text="${current}"
+           th:href="'?page=' + ${current}"
+           class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page">
+        </a>
+        <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
+           th:href="${content.hasNext} ? '?page=' + ${content.endPage + 1} : 'javascript:;'"
+           th:disabled="${!content.hasNext}">
+          <span class="material-icons">navigate_next</span>
+        </a>
+      </div>
     </div>
   </main>
 </div>

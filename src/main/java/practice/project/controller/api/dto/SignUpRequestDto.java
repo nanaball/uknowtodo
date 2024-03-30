@@ -10,8 +10,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class SignUpRequestDto implements Serializable {
-
-    private String username;
+    private String id;
     private String password;
     private String name;
 }

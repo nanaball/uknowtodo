@@ -15,8 +15,8 @@ import java.util.Optional;
 public class Member {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)		// 자동증가
-	private Long memberNo; 	// 회원번호 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long memberNo;
 	
 	@Column	
 	private String id;
@@ -25,14 +25,14 @@ public class Member {
 	private String password;
 	
 	@Column
-	private String writer;	// 회원이름 
+	private String name;
 
 	@Column
-	private LocalDateTime regdate;
+	private LocalDateTime createdDate;
 
 	@PrePersist
 	public void prePersist() {
 		LocalDateTime now = LocalDateTime.now();
-		this.regdate = Optional.ofNullable(this.regdate).orElse(now);
+		this.createdDate = Optional.ofNullable(this.createdDate).orElse(now);
 	}
 }

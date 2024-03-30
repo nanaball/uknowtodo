@@ -10,28 +10,34 @@ import java.util.Optional;
 
 @Getter
 @Setter
-@Table(name = "todo")
+@Table(name = "todos")
 @Entity
 public class Todo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)		// 자동증가
-	private Long todoNo; 			// 할 일 번호 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long todoNo;
 	
 	@Column	
-	private Long memberNo;			// 회원 번호(외래키)
+	private Long memberNo;
 	
 	@Column
-	private String todoName;		// 할일 목록
+	private String todoName;
 	
 	@Column
-	private String todoContent;		// 할일 상세내용 
-	
-	@Column
-	private boolean completed; 		// 완료여부
+	private String todoContent;
 
 	@Column
-	private LocalDateTime todoDate; //  마감시간
+	private String category;
+	
+	@Column
+	private boolean completed;
+
+	@Column
+	private boolean deleted;
+
+	@Column
+	private LocalDateTime todoDate;
 
 	@Column
 	private LocalDateTime createdDate;

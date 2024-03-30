@@ -1,6 +1,5 @@
 package practice.project.configuration;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import practice.project.controller.application.CustomUserDetailService;
 import practice.project.controller.api.dto.ResponseDto;
+import practice.project.controller.application.CustomUserDetailService;
 import practice.project.util.ObjectMapperUtil;
 
 import java.io.IOException;
@@ -54,7 +53,7 @@ public class SecurityConfig {
     public SimpleUrlAuthenticationFailureHandler simpleUrlAuthenticationFailureHandler() {
         return new SimpleUrlAuthenticationFailureHandler() {
             @Override
-            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
@@ -78,9 +77,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .userDetailsService(customUserDetailService)
                 .authorizeHttpRequests(req -> req.requestMatchers("/", "/sign-in", "/sign-up", "/api/find-id", "/api/sign-up")
                         .permitAll().anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/sign-in")
+                        .usernameParameter("id")
                         .loginProcessingUrl("/api/sign-in")
                         .successHandler(simpleUrlAuthenticationSuccessHandler())
                         .failureHandler(simpleUrlAuthenticationFailureHandler())
