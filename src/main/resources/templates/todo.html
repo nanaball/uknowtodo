@@ -30,31 +30,31 @@
             </label>
           </div>
         </div>
-        <table
-            style="width: 100%"
-            class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-          <thead>
-          <tr>
-            <th class="mdl-data-table__cell--non-numeric">할일</th>
-            <th class="mdl-data-table__cell--non-numeric">마감일자</th>
-            <th class="mdl-data-table__cell--non-numeric">완료</th>
-            <th class="mdl-data-table__cell--non-numeric">생성일자</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">스프링 공부 열심히 하기</td>
-            <td class="mdl-data-table__cell--non-numeric">2024-03-10</td>
-            <td class="mdl-data-table__cell--non-numeric">
-              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-                <input type="checkbox" id="switch-1" class="mdl-switch__input">
-                <span class="mdl-switch__label"></span>
+      </div>
+    </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+        <ul class="mdl-list todo-list">
+          <li class="mdl-list__item todo-list-item">
+            <span class="mdl-list__item-secondary-action">
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-1">
+                <input type="checkbox" id="list-checkbox-1" class="mdl-checkbox__input" checked/>
               </label>
-            </td>
-            <td class="mdl-data-table__cell--non-numeric">2024-02-23</td>
-          </tr>
-          </tbody>
-        </table>
+            </span>
+            <span class="mdl-list__item-primary-content todo-list-item__title">Bryan Cranston</span>
+          </li>
+          <li class="mdl-list__item todo-list-item active">
+            <span class="mdl-list__item-secondary-action">
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-2">
+                <input type="checkbox" id="list-checkbox-2" class="mdl-checkbox__input"/>
+              </label>
+            </span>
+            <span class="mdl-list__item-primary-content todo-list-item__title">Bryan Cranston</span>
+            <div class="mdl-textfield mdl-js-textfield">
+              <input th:value="'Bryan Cranston'" class="mdl-textfield__input">
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <div class="mdl-grid">

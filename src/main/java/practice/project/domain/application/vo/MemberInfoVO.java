@@ -6,4 +6,8 @@ import lombok.Getter;
 @Getter
 @Builder
 public class MemberInfoVO {
+    Long memberNo;
+    String id;
+    String encryptedPassword;
+    String name;
 }

@@ -1,10 +1,11 @@
 package practice.project.domain.application.exception;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.AuthenticationException;
 
 @Getter
-@RequiredArgsConstructor
-public class LoginFailException extends Exception {
-    private final String failReason;
+public class LoginFailException extends AuthenticationException {
+    public LoginFailException(String msg) {
+        super(msg);
+    }
 }

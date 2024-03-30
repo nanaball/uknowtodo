@@ -23,3 +23,16 @@
   background: rgb(63,81,181);
   color: rgb(255,255,255);
 }
+
+.todo-list > .todo-list-item:hover {
+  background: #dedede;
+  cursor: pointer;
+}
+
+.todo-list > .todo-list-item.active {
+  background: rgba(63,81,181,0.2);
+}
+
+.todo-list > .todo-list-item.active .todo-list-item__title {
+  display: none;
+}
