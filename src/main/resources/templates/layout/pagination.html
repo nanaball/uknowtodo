@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<th:block th:fragment="pagination">
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-offset-desktop
+                  mdl-cell--6-col mdl-cell--1-offset
+                  todo-pagination">
+      <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
+         th:href="${content.hasBefore} ? '?page=' + ${content.startPage - 1} : 'javascript:;'"
+         th:disabled="${!content.hasBefore}">
+        <span class="material-icons">navigate_before</span>
+      </a>
+      <a th:each="current: ${#numbers.sequence(content.startPage, content.endPage)}"
+         th:classappend="${current == content.page} ? 'active'"
+         th:text="${current}"
+         th:href="'?page=' + ${current}"
+         class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page">
+      </a>
+      <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
+         th:href="${content.hasNext} ? '?page=' + ${content.endPage + 1} : 'javascript:;'"
+         th:disabled="${!content.hasNext}">
+        <span class="material-icons">navigate_next</span>
+      </a>
+    </div>
+  </div>
+</th:block>
+</html>

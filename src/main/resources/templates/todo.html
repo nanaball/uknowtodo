@@ -33,54 +33,99 @@
       </div>
     </div>
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
-        <ul class="mdl-list todo-list">
-          <li class="mdl-list__item todo-list-item">
-            <span class="mdl-list__item-secondary-action">
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-1">
-                <input type="checkbox" id="list-checkbox-1" class="mdl-checkbox__input" checked/>
+      <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop">
+        <div th:text="'총 '+${content.totalElements} + 개"></div>
+        <ul class="mdl-list todo-list" th:with="todoList=${content.content}">
+          <li th:each="todo: ${todoList}"
+              th:data-no="${todo.todoNo}"
+              class="mdl-list__item todo-list-item">
+            <span>
+              <label class="mdl-checkbox todo-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+                     th:for="'todo-checkbox-' + ${todo.todoNo}">
+                <input type="checkbox" th:id="'todo-checkbox-' + ${todo.todoNo}" class="mdl-checkbox__input"
+                       th:checked="${todo.completed}"/>
               </label>
             </span>
-            <span class="mdl-list__item-primary-content todo-list-item__title">Bryan Cranston</span>
-          </li>
-          <li class="mdl-list__item todo-list-item active">
-            <span class="mdl-list__item-secondary-action">
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-2">
-                <input type="checkbox" id="list-checkbox-2" class="mdl-checkbox__input"/>
-              </label>
+            <span class="todo-list-item__content">
+              <span class="todo-list-item__title">
+                <span class="todo-list-item__title-text" th:text="${todo.todoName}"></span>
+                <span class="mdl-textfield mdl-js-textfield todo-list-item__title-input">
+                  <input class="mdl-textfield__input" type="text"
+                         th:value="${todo.todoName}"
+                         th:id="'todo-title-input-' + ${todo.todoNo}">
+                  <label class="mdl-textfield__label" th:for="'todo-title-input-' + ${todo.todoNo}"></label>
+                </span>
+                <span class="todo-edited-info">수정중</span>
+                <span class="todo-list-item__info">
+                  <span th:id="'todo-info-'+${todo.todoNo}"
+                        class="material-icons md-18 mdl-color-text--indigo-A700">info_outlined</span>
+                  <span class="mdl-tooltip"
+                        th:for="'todo-info-'+${todo.todoNo}">
+                    생성일자: [[${todo.createdDate}]]<br />
+                    수정일자: [[${todo.updatedDate}]]
+                  </span>
+                </span>
+              </span>
+              <span class="todo-list-item__content-row">
+                <button class="mdl-chip mdl-color--primary mdl-color-text--white">
+                  <span class="mdl-chip__text">메모 추가</span>
+                </button>
+                <button class="mdl-chip mdl-color--primary mdl-color-text--white">
+                  <span class="mdl-chip__text">날짜 추가</span>
+                </button>
+                <span class="todo-list-item__content" th:text="${todo.todoContent}"></span>
+                <span class="mdl-textfield mdl-js-textfield todo-list-item__content-input">
+                  <input class="mdl-textfield__input" type="text"
+                         th:value="${todo.todoContent}"
+                         th:id="'todo-content-input-' + ${todo.todoNo}">
+                  <label class="mdl-textfield__label" th:for="'todo-content-input-' + ${todo.todoNo}">메모</label>
+                </span>
+              </span>
             </span>
-            <span class="mdl-list__item-primary-content todo-list-item__title">Bryan Cranston</span>
-            <div class="mdl-textfield mdl-js-textfield">
-              <input th:value="'Bryan Cranston'" class="mdl-textfield__input">
-            </div>
           </li>
         </ul>
       </div>
     </div>
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--4-col-desktop mdl-cell--4-offset-desktop
-                  mdl-cell--6-col mdl-cell--1-offset
-                  todo-pagination">
-        <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
-           th:href="${content.hasBefore} ? '?page=' + ${content.startPage - 1} : 'javascript:;'"
-           th:disabled="${!content.hasBefore}">
-          <span class="material-icons">navigate_before</span>
-        </a>
-        <a th:each="current: ${#numbers.sequence(content.startPage, content.endPage)}"
-           th:classappend="${current == content.page} ? 'active'"
-           th:text="${current}"
-           th:href="'?page=' + ${current}"
-           class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page">
-        </a>
-        <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
-           th:href="${content.hasNext} ? '?page=' + ${content.endPage + 1} : 'javascript:;'"
-           th:disabled="${!content.hasNext}">
-          <span class="material-icons">navigate_next</span>
-        </a>
-      </div>
-    </div>
+    <div th:replace="~{/layout/pagination :: pagination}"></div>
   </main>
 </div>
 <div th:replace="~{/layout/common-script :: common-script}"></div>
+<script>
+  const todoList = document.querySelectorAll('li.todo-list-item');
+  todoList.forEach(item => {
+    item.onclick = (e) => {
+      e.stopPropagation();
+      if (item.classList.contains('active')) {
+        item.classList.remove('active');
+      } else {
+        todoList.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      }
+    }
+
+    item.querySelectorAll('button').forEach(button => {
+      button.onclick = (e) => {
+        e.stopPropagation();
+      }
+    });
+  });
+
+  document.querySelectorAll('input.mdl-textfield__input').forEach(input => {
+    input.onclick = (e) => {
+      e.stopPropagation();
+    };
+
+    input.onchange = (e) => {
+
+    };
+  });
+
+  document.onclick = (e) => {
+    e.stopPropagation();
+    todoList.forEach(item => {
+      item.classList.remove('active');
+    });
+  }
+</script>
 </body>
 </html>
