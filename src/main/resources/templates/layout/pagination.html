@@ -8,7 +8,7 @@
       <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
          th:href="${content.hasBefore} ? '?page=' + ${content.startPage - 1} : 'javascript:;'"
          th:disabled="${!content.hasBefore}">
-        <span class="material-icons">navigate_before</span>
+        <i class="fa-solid fa-angle-left"></i>
       </a>
       <a th:each="current: ${#numbers.sequence(content.startPage, content.endPage)}"
          th:classappend="${current == content.page} ? 'active'"
@@ -19,7 +19,7 @@
       <a class="mdl-button mdl-js-button mdl-button--icon todo-pagination-page"
          th:href="${content.hasNext} ? '?page=' + ${content.endPage + 1} : 'javascript:;'"
          th:disabled="${!content.hasNext}">
-        <span class="material-icons">navigate_next</span>
+        <i class="fa-solid fa-angle-right"></i>
       </a>
     </div>
   </div>

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long>{
-    Page<Todo> findAllByMemberNoOrderByUpdatedDateDesc(Long memberNo, Pageable pageable);
+    Page<Todo> findAllByMemberNoAndDeletedOrderByUpdatedDateDesc(Long memberNo, boolean deleted, Pageable pageable);
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TodoFrontServiceImpl implements TodoFrontService {
     private final TodoService todoService;
-    private int pageSize = 3;
+    private int pageSize = 10;
 
     public PageDto<TodoResponseDto> getTodoList(int page) {
         Long memberNo = LoginUtil.getMemberNo();

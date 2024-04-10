@@ -29,6 +29,6 @@ public class TodoServiceImpl implements TodoService {
     @Transactional
     public Page<Todo> findTodo(Long memberNo, int page, int pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return todoRepository.findAllByMemberNoOrderByUpdatedDateDesc(memberNo, pageRequest);
+        return todoRepository.findAllByMemberNoAndDeletedOrderByUpdatedDateDesc(memberNo, false, pageRequest);
     }
 }

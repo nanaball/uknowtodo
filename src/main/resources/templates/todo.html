@@ -6,8 +6,9 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/material.min.css">
+  <link rel="stylesheet" href="/css/layout.css">
   <link rel="stylesheet" href="/css/todo.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://kit.fontawesome.com/35748dead7.js" crossorigin="anonymous"></script>
   <title>U Know To do</title>
 </head>
 <body>
@@ -21,12 +22,9 @@
           <div class="mdl-textfield mdl-js-textfield">
             <input class="mdl-textfield__input" type="text" id="sample6">
             <label class="mdl-textfield__label" for="sample6"></label>
-          </div>
-          <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="date">
             <label class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-button--colored"
                    for="sample6">
-              <i class="material-icons">add</i>
+              <i style="line-height: 54px;" class="fa-solid fa-plus"></i>
             </label>
           </div>
         </div>
@@ -34,60 +32,108 @@
     </div>
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop">
-        <div th:text="'총 '+${content.totalElements} + 개"></div>
+        <div class="mdl-grid">
+          <div class="mdl-cell flex-cell--1" th:text="'총 '+${content.totalElements} + 개"></div>
+          <div class="mdl-cell flex-cell--0">
+          </div>
+        </div>
         <ul class="mdl-list todo-list" th:with="todoList=${content.content}">
           <li th:each="todo: ${todoList}"
               th:data-no="${todo.todoNo}"
               class="mdl-list__item todo-list-item">
-            <span>
+            <div>
               <label class="mdl-checkbox todo-checkbox mdl-js-checkbox mdl-js-ripple-effect"
                      th:for="'todo-checkbox-' + ${todo.todoNo}">
                 <input type="checkbox" th:id="'todo-checkbox-' + ${todo.todoNo}" class="mdl-checkbox__input"
                        th:checked="${todo.completed}"/>
               </label>
-            </span>
-            <span class="todo-list-item__content">
-              <span class="todo-list-item__title">
-                <span class="todo-list-item__title-text" th:text="${todo.todoName}"></span>
-                <span class="mdl-textfield mdl-js-textfield todo-list-item__title-input">
-                  <input class="mdl-textfield__input" type="text"
-                         th:value="${todo.todoName}"
-                         th:id="'todo-title-input-' + ${todo.todoNo}">
-                  <label class="mdl-textfield__label" th:for="'todo-title-input-' + ${todo.todoNo}"></label>
-                </span>
-                <span class="todo-edited-info">수정중</span>
-                <span class="todo-list-item__info">
-                  <span th:id="'todo-info-'+${todo.todoNo}"
-                        class="material-icons md-18 mdl-color-text--indigo-A700">info_outlined</span>
-                  <span class="mdl-tooltip"
-                        th:for="'todo-info-'+${todo.todoNo}">
-                    생성일자: [[${todo.createdDate}]]<br />
-                    수정일자: [[${todo.updatedDate}]]
+            </div>
+            <div class="todo-list-item__content">
+              <p class="todo-list-item__title-row">
+                <span class="todo-list-item__title">
+                  <span class="todo-list-item__title-text" th:text="${todo.todoName}"></span>
+                  <span class="todo-list-item__completed-info">완료됨</span>
+                  <span class="mdl-textfield mdl-js-textfield todo-list-item__title-input">
+                    <input class="mdl-textfield__input" type="text"
+                           th:value="${todo.todoName}"
+                           th:id="'todo-title-input-' + ${todo.todoNo}">
+                    <label class="mdl-textfield__label" th:for="'todo-title-input-' + ${todo.todoNo}"></label>
+                  </span>
+<!--                  <span class="todo-edited-info">수정중</span>-->
+                  <span class="todo-list-item__info">
+                    <i th:id="'todo-info-'+${todo.todoNo}"
+                       class="fa-solid fa-circle-info mdl-color-text--primary"></i>
+                    <span class="mdl-tooltip"
+                          th:for="'todo-info-'+${todo.todoNo}">
+                      생성일자: [[${todo.createdDate}]]<br/>
+                      수정일자: [[${todo.updatedDate}]]
+                    </span>
                   </span>
                 </span>
-              </span>
-              <span class="todo-list-item__content-row">
-                <button class="mdl-chip mdl-color--primary mdl-color-text--white">
+                <span class="todo-list-item__action todo-list-item__action-delete mdl-color-text--grey-600">
+                  <i class="fa-icon fa-solid fa-trash-can"></i>
+                </span>
+              </p>
+              <div class="todo-list-item__memo-row">
+                <p class="todo-list-item__memo" th:text="${todo.todoContent}"></p>
+                <button th:classappend="${not#strings.isEmpty(todo.todoContent)} ? 'hidden'"
+                        class="todo-list-item__memo-input-button mdl-chip mdl-color--primary mdl-color-text--white">
                   <span class="mdl-chip__text">메모 추가</span>
                 </button>
-                <button class="mdl-chip mdl-color--primary mdl-color-text--white">
-                  <span class="mdl-chip__text">날짜 추가</span>
-                </button>
-                <span class="todo-list-item__content" th:text="${todo.todoContent}"></span>
-                <span class="mdl-textfield mdl-js-textfield todo-list-item__content-input">
+                <span th:classappend="${#strings.isEmpty(todo.todoContent)} ? 'hidden'" class="mdl-textfield mdl-js-textfield todo-list-item__memo-input">
                   <input class="mdl-textfield__input" type="text"
                          th:value="${todo.todoContent}"
-                         th:id="'todo-content-input-' + ${todo.todoNo}">
-                  <label class="mdl-textfield__label" th:for="'todo-content-input-' + ${todo.todoNo}">메모</label>
+                         th:id="'todo-memo-input-' + ${todo.todoNo}">
+                  <label class="mdl-textfield__label" th:for="'todo-memo-input-' + ${todo.todoNo}">메모</label>
                 </span>
-              </span>
-            </span>
+              </div>
+              <div class="todo-list-item__date-time-row">
+                <span th:classappend="${#strings.isEmpty(todo.todoDate)} ? 'hidden'"
+                      class="mdl-chip mdl-chip--deletable mdl-color--indigo-50 mdl-color-text--primary">
+                  <span class="mdl-chip__text" th:text="${todo.todoDate}"></span>
+                  <button type="button" class="mdl-chip__action">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </span>
+                <span th:classappend="${#strings.isEmpty(todo.todoTime)} ? 'hidden'"
+                      class="mdl-chip mdl-chip--deletable mdl-color--indigo-50 mdl-color-text--primary">
+                  <span class="mdl-chip__text" th:text="${todo.todoTime}"></span>
+                  <button type="button" class="mdl-chip__action">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </span>
+                <button th:classappend="${not#strings.isEmpty(todo.todoDate)} ? 'hidden'"
+                        class="todo-list-item__date-input-button mdl-chip mdl-color--primary mdl-color-text--white">
+                  <span class="mdl-chip__text">
+                    <i style="line-height: 30px; margin-right: 3px;" class="fa-solid fa-calendar-days"></i>
+                    <span style="vertical-align: top;">날짜 추가</span>
+                  </span>
+                </button>
+                <button th:classappend="${#strings.isEmpty(todo.todoDate) or not#strings.isEmpty(todo.todoTime)} ? 'hidden'"
+                        class="todo-list-item__time-input-button mdl-chip mdl-color--primary mdl-color-text--white">
+                  <span class="mdl-chip__text">
+                    <i style="line-height: 30px; margin-right: 3px;" class="fa-regular fa-clock"></i>
+                    <span style="vertical-align: top;">시간 추가</span>
+                  </span>
+                </button>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
     </div>
     <div th:replace="~{/layout/pagination :: pagination}"></div>
   </main>
+  <footer>
+    <div class="mdl-grid mdl-color--primary mdl-color-text--primary-contrast mdl-typography--text-center">
+      <div class="mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+        <p>
+          <span class="mdl-typography--title mdl-typography--font-bold">U Know To Do</span>
+        </p>
+        <p>Copyright &copy; 2024 Gayeon Kim, Sooyeon Uhm</p>
+      </div>
+    </div>
+  </footer>
 </div>
 <div th:replace="~{/layout/common-script :: common-script}"></div>
 <script>
@@ -117,6 +163,12 @@
 
     input.onchange = (e) => {
 
+    };
+  });
+
+  document.querySelectorAll('.todo-list-item__action.todo-list-item__action-delete').forEach(button => {
+    button.onclick = (e) => {
+      e.stopPropagation();
     };
   });
 

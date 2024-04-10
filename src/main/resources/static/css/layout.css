@@ -1,0 +1,38 @@
+main {
+  padding-bottom: 100px;
+}
+
+footer > div.mdl-grid > div {
+  margin-top: 20px;
+}
+
+.todo-pagination {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+
+  & > a.todo-pagination-page {
+    font-size: 16px;
+    line-height: 32px;
+    color: rgba(0, 0, 0, 0.87);
+    text-decoration: unset;
+
+    &.active {
+      background: rgb(63, 81, 181);
+      color: rgb(255, 255, 255);
+    }
+  }
+}
+
+.flex-cell--0 {
+  flex: 0;
+}
+
+.flex-cell--1 {
+  flex: 1;
+}
+
+.fa-icon {
+  font-size: 18px;
+}
