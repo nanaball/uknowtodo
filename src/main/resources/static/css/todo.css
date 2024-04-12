@@ -1,9 +1,13 @@
-.todo-content-input .mdl-textfield.is-focused:first-child {
-  width: calc(100% - 70px);
-}
+.todo-content-input {
+  display: flex;
 
-.todo-content-input .mdl-button {
-  right: -70px;
+  & > .mdl-textfield:first-child {
+    margin-right: 20px;
+  }
+
+  & > .mdl-textfield.is-focused:first-child {
+    width: 800px;
+  }
 }
 
 .todo-list > .todo-list-item .todo-checkbox.mdl-checkbox {
@@ -119,6 +123,10 @@
   & .todo-list-item__info {
     margin-left: 10px;
     display: none;
+
+    & .mdl-tooltip {
+      max-width: 200px;
+    }
   }
   
   & .todo-list-item__action.todo-list-item__action-delete {

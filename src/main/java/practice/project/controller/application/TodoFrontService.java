@@ -6,6 +6,8 @@ import practice.project.controller.pages.dto.TodoResponseDto;
 
 public interface TodoFrontService {
     PageDto<TodoResponseDto> getTodoList(int page);
-    Long writeTodo(TodoRequestDto todo);
-    Long changeTodoStatus(Long todoNo, boolean status);
+    TodoResponseDto writeTodo(String todoName);
+    TodoResponseDto updateTodo(Long todoNo, TodoRequestDto todoRequestDto);
+    TodoResponseDto changeTodoStatus(Long todoNo, boolean status);
+    void deleteTodo(Long todoNo);
 }

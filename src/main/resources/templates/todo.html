@@ -20,12 +20,13 @@
         <h1 class="mdl-typography--display-1">안녕하세요, <span sec:authentication="principal.name"></span> 님!</h1>
         <div class="todo-content-input">
           <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text" id="sample6">
-            <label class="mdl-textfield__label" for="sample6"></label>
-            <label class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-button--colored"
-                   for="sample6">
+            <input class="mdl-textfield__input" type="text" id="newTodoInput">
+            <label class="mdl-textfield__label" for="newTodoInput">새로운 할일 제목</label>
+          </div>
+          <div>
+            <button class="todo-content-add__button mdl-button mdl-js-button mdl-button--fab mdl-button--primary mdl-button--colored" disabled>
               <i style="line-height: 54px;" class="fa-solid fa-plus"></i>
-            </label>
+            </button>
           </div>
         </div>
       </div>
@@ -52,14 +53,14 @@
               <p class="todo-list-item__title-row">
                 <span class="todo-list-item__title">
                   <span class="todo-list-item__title-text" th:text="${todo.todoName}"></span>
-                  <span class="todo-list-item__completed-info">완료됨</span>
                   <span class="mdl-textfield mdl-js-textfield todo-list-item__title-input">
                     <input class="mdl-textfield__input" type="text"
                            th:value="${todo.todoName}"
                            th:id="'todo-title-input-' + ${todo.todoNo}">
                     <label class="mdl-textfield__label" th:for="'todo-title-input-' + ${todo.todoNo}"></label>
                   </span>
-<!--                  <span class="todo-edited-info">수정중</span>-->
+                  <span class="todo-edited-info hidden">수정중</span>
+                  <span class="todo-list-item__completed-info">완료됨</span>
                   <span class="todo-list-item__info">
                     <i th:id="'todo-info-'+${todo.todoNo}"
                        class="fa-solid fa-circle-info mdl-color-text--primary"></i>
@@ -89,14 +90,14 @@
               </div>
               <div class="todo-list-item__date-time-row">
                 <span th:classappend="${#strings.isEmpty(todo.todoDate)} ? 'hidden'"
-                      class="mdl-chip mdl-chip--deletable mdl-color--indigo-50 mdl-color-text--primary">
+                      class="mdl-chip mdl-chip--deletable todo-list-item__date-input mdl-color--indigo-50 mdl-color-text--primary">
                   <span class="mdl-chip__text" th:text="${todo.todoDate}"></span>
                   <button type="button" class="mdl-chip__action">
                     <i class="fa-solid fa-xmark"></i>
                   </button>
                 </span>
                 <span th:classappend="${#strings.isEmpty(todo.todoTime)} ? 'hidden'"
-                      class="mdl-chip mdl-chip--deletable mdl-color--indigo-50 mdl-color-text--primary">
+                      class="mdl-chip mdl-chip--deletable todo-list-item__time-input mdl-color--indigo-50 mdl-color-text--primary">
                   <span class="mdl-chip__text" th:text="${todo.todoTime}"></span>
                   <button type="button" class="mdl-chip__action">
                     <i class="fa-solid fa-xmark"></i>
@@ -130,54 +131,40 @@
         <p>
           <span class="mdl-typography--title mdl-typography--font-bold">U Know To Do</span>
         </p>
-        <p>Copyright &copy; 2024 Gayeon Kim, Sooyeon Uhm</p>
+        <p>Copyright &copy; 2024 Gayeon Kim, Sooyeon Um</p>
       </div>
     </div>
   </footer>
 </div>
 <div th:replace="~{/layout/common-script :: common-script}"></div>
 <script>
-  const todoList = document.querySelectorAll('li.todo-list-item');
-  todoList.forEach(item => {
-    item.onclick = (e) => {
-      e.stopPropagation();
-      if (item.classList.contains('active')) {
-        item.classList.remove('active');
-      } else {
-        todoList.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-      }
+  const newTextFieldInput = document.querySelector('#newTodoInput');
+  const newAddButton = document.querySelector('.todo-content-add__button');
+
+  newTextFieldInput.onkeyup = (e) => {
+    const inputValue = e.target.value;
+    newAddButton.disabled = (inputValue.trim() === '');
+  };
+
+  newAddButton.onmousedown = (e) => {
+    e.preventDefault();
+  }
+
+  newAddButton.onclick = async () => {
+    const response = await fetch('/api/todo', {
+      method: 'POST',
+      body: newTextFieldInput.value
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      location.href = '/todo';
+    } else {
+      console.log(result);
     }
-
-    item.querySelectorAll('button').forEach(button => {
-      button.onclick = (e) => {
-        e.stopPropagation();
-      }
-    });
-  });
-
-  document.querySelectorAll('input.mdl-textfield__input').forEach(input => {
-    input.onclick = (e) => {
-      e.stopPropagation();
-    };
-
-    input.onchange = (e) => {
-
-    };
-  });
-
-  document.querySelectorAll('.todo-list-item__action.todo-list-item__action-delete').forEach(button => {
-    button.onclick = (e) => {
-      e.stopPropagation();
-    };
-  });
-
-  document.onclick = (e) => {
-    e.stopPropagation();
-    todoList.forEach(item => {
-      item.classList.remove('active');
-    });
   }
 </script>
+<script src="/js/TodoList.js"></script>
 </body>
 </html>

@@ -16,8 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TodoFrontServiceImpl implements TodoFrontService {
     private final TodoService todoService;
-    private int pageSize = 10;
+    private int pageSize = 3;
 
+    @Override
     public PageDto<TodoResponseDto> getTodoList(int page) {
         Long memberNo = LoginUtil.getMemberNo();
         Page<Todo> content = todoService.findTodo(memberNo, page - 1, pageSize);
@@ -29,12 +30,27 @@ public class TodoFrontServiceImpl implements TodoFrontService {
         return PageDto.of(convertedContentList, page, content.getTotalElements(), pageSize);
     }
 
-    public Long writeTodo(TodoRequestDto todo) {
-
-        return 1l;
+    @Override
+    public TodoResponseDto writeTodo(String todoName) {
+        Long memberNo = LoginUtil.getMemberNo();
+        Todo todoResult = todoService.save(todoName, memberNo);
+        return TodoResponseDto.toDto(todoResult);
     }
 
-    public Long changeTodoStatus(Long todoNo, boolean status) {
-        return todoService.updateTodoStatus(todoNo, status);
+    @Override
+    public TodoResponseDto updateTodo(Long todoNo, TodoRequestDto todoRequestDto) {
+        Todo todoResult = todoService.updateTodo(todoNo, todoRequestDto);
+        return TodoResponseDto.toDto(todoResult);
+    }
+
+    @Override
+    public TodoResponseDto changeTodoStatus(Long todoNo, boolean completed) {
+        Todo todoResult = todoService.changeCompleted(todoNo, completed);
+        return TodoResponseDto.toDto(todoResult);
+    }
+
+    @Override
+    public void deleteTodo(Long todoNo) {
+        todoService.deleteTodo(todoNo);
     }
 }

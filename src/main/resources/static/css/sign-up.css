@@ -3,7 +3,7 @@
   border-width: 2px;
 }
 
-.mdl-textfield .material-icons.valid-check-circle {
+.mdl-textfield .valid-check-circle {
   visibility: hidden;
   color: rgb(76,175,80);
   position: absolute;
@@ -11,6 +11,6 @@
   right: 10px;
 }
 
-.mdl-textfield.is-valid .material-icons.valid-check-circle {
+.mdl-textfield.is-valid .valid-check-circle {
   visibility: visible;
 }
