@@ -5,6 +5,7 @@
 - 20240130 기본세팅
 - 20240201 세팅 추가 완료/ 브랜치(nana) 생성 완
 
+
 ### 초기 세팅법
 1. 기존 폴더 지우기
 2. STS 메뉴에서 `File > Import > Git > Projects from Git (with smart import)` 선택
